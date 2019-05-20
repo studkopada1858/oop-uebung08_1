@@ -1,8 +1,6 @@
 package ueb08;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -93,11 +91,11 @@ class AnalysenTest {
  	 */
 	@Test
 	void testVereineMeisteToreZuhause() throws IOException {
-		List<Pair<String, Integer>> besteDrei = Analysen.vereineMeisteToreZuhause();
+		List<Analysen.VereinTore> besteDrei = Analysen.vereineMeisteToreZuhause();
 
-		assertEquals(Pair.of("SV Meppen", 34), besteDrei.get(0));
-		assertEquals(Pair.of("FC Bayern München", 16), besteDrei.get(1));
-		assertEquals(Pair.of("FC Schalke 04", 16), besteDrei.get(2));
+		assertEquals(new Analysen.VereinTore("FC Bayern München", 55), besteDrei.get(0));
+		assertEquals(new Analysen.VereinTore("Borussia Dortmund", 39), besteDrei.get(1));
+		assertEquals(new Analysen.VereinTore("1899 Hoffenheim", 35), besteDrei.get(2));
 	}
 
 	/**
@@ -105,6 +103,6 @@ class AnalysenTest {
 	 */
 	@Test
 	void vereineWenigsteToreAuswaerts() throws IOException {
-		assertEquals(Pair.of("VfR Aalen", 1), Analysen.vereineWenigsteToreAuswaerts());
+		assertEquals(new Analysen.VereinTore("Rot-Weiß Erfurt", 0), Analysen.vereineWenigsteToreAuswaerts());
 	}
 }

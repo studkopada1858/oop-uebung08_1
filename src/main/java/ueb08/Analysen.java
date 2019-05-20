@@ -1,11 +1,8 @@
 package ueb08;
 
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.util.*;
-
-
 
 
 class Analysen {
@@ -212,55 +209,85 @@ class Analysen {
 	}
 
 	/**
+	 * Hilfsklasse.
+	 */
+	static class VereinTore {
+		String verein;
+		int tore;
+
+		public VereinTore(String v, int t) {
+			this.verein = v;
+			this.tore = t;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o)
+				return true;
+			if (!(o instanceof VereinTore))
+				return false;
+			VereinTore that = (VereinTore) o;
+			return tore == that.tore && verein.equals(that.verein);
+		}
+	}
+
+	/**
 	 * Welche drei Vereine haben die meisten Tore zuhause geschossen, und wie viele?
 	 */
-	static List<Pair<String,Integer>> vereineMeisteToreZuhause() throws IOException {
+	static List<VereinTore> vereineMeisteToreZuhause() throws IOException {
 		Bundesliga bl = Bundesliga.loadFromResource();
 
 		Map<Integer, Integer> toreZuhause = new HashMap<>();
 
-		for (Spiel s : bl.spiele)
-			toreZuhause.merge(s.getHeim(), 1, (a, b) -> a + b);
+		for (Spiel s : bl.spiele) {
+			int tore = 0;
+			if (toreZuhause.containsKey(s.getHeim()))
+				tore = toreZuhause.get(s.getHeim());
+			toreZuhause.put(s.getHeim(), tore + s.getToreHeim());
+		}
 
-		List<Pair<String, Integer>> liste = new LinkedList<>();
+		List<VereinTore> liste = new LinkedList<>();
 
 		for (Map.Entry<Integer, Integer> e : toreZuhause.entrySet()) {
 			Verein v = bl.vereine.get(e.getKey());
 			Integer tore = e.getValue();
-			liste.add(Pair.of(v.getName(), tore));
+			liste.add(new VereinTore( v.getName(), tore));
 		}
 
-		liste.sort(Comparator.comparingInt(Pair<String, Integer>::getRight).reversed());
+		liste.sort(new Comparator<VereinTore>() {
+			@Override
+			public int compare(VereinTore o1, VereinTore o2) {
+				return Integer.compare(o2.tore, o1.tore);
+			}
+		});
 
-		List<Pair<String, Integer>> besteDrei = liste.subList(0, 3);
-
-		return besteDrei;
+		return liste.subList(0,3);
 	}
 
 	/**
 	 * Welcher Verein hat die wenigsten Tore auswärts geschossen, und wie viele?
 	 */
-	static Pair<String, Integer> vereineWenigsteToreAuswaerts() throws IOException {
+	static VereinTore vereineWenigsteToreAuswaerts() throws IOException {
 		Bundesliga bl = Bundesliga.loadFromResource();
 
 		Map<Integer, Integer> toreZuhause = new HashMap<>();
 
-		for (Spiel s : bl.spiele)
-			toreZuhause.merge(s.getHeim(), 1, (a, b) -> a + b);
+		for (Spiel s : bl.spiele) {
+			int tore = 0;
+			if (toreZuhause.containsKey(s.getGast()))
+				tore = toreZuhause.get(s.getGast());
+			toreZuhause.put(s.getGast(), tore + s.getToreGast());
+		}
 
-		List<Pair<String, Integer>> liste = new LinkedList<>();
+		VereinTore schlechtester = new VereinTore("", Integer.MAX_VALUE);
 
 		for (Map.Entry<Integer, Integer> e : toreZuhause.entrySet()) {
 			Verein v = bl.vereine.get(e.getKey());
 			Integer tore = e.getValue();
-			liste.add(Pair.of(v.getName(), tore));
+			if (tore < schlechtester.tore)
+				schlechtester = new VereinTore(v.getName(), tore);
 		}
 
-		liste.sort(Comparator.comparingInt(Pair<String, Integer>::getRight));
-
-		Pair<String, Integer> schlechtester = liste.get(0);
-
-		System.out.println(schlechtester);
 		return schlechtester;
 	}
 
