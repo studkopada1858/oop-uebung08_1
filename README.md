@@ -1,7 +1,7 @@
 _Übungsaufgabe zur Veranstaltung [Objektorientiertes Programmieren](https://hsro-wif-oop.github.io) im [Bachelorstudiengang Wirtschaftsinformatik](https://www.th-rosenheim.de/technik/informatik-mathematik/wirtschaftsinformatik-bachelor/) an der [Hochschule Rosenheim](http://www.th-rosenheim.de)._
 
 
-# Datenverarbeitung
+# Übung 8-1: Datenverarbeitung
 
 In der Vorlesung haben wir die Klassiker zur Datenverarbeitung behandelt:
 
@@ -23,10 +23,7 @@ die Daten ein und Arbeiten Sie mit den vorhandenen Datenstrukturen **Bundesliga,
 
 Viel Erfolg! 
 
-
-# Aufgaben
-
-## Torstatistiken
+## Aufgabe 1: Torstatistiken
 
 Schreiben Sie Methoden, die die Torstatistik auswerten.
 
@@ -38,7 +35,7 @@ Schreiben Sie Methoden, die die Torstatistik auswerten.
 
 ---
 
-## Vereine
+## Aufgabe 2: Vereine
 
 1. Wie viele Tore hat der FC Bayern München (Verein 1) erzielt?
 2. Wie viele Tore hat der FC Schalke 04 (Verein 2) kassiert?
