@@ -85,9 +85,33 @@ class Analysen {
 	}
 
 	/**
+	 * Hilfsklasse.
+	 */
+	static class VereinTore {
+		String verein;
+		int tore;
+
+		public VereinTore(String v, int t) {
+			this.verein = v;
+			this.tore = t;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o)
+				return true;
+			if (!(o instanceof VereinTore))
+				return false;
+			VereinTore that = (VereinTore) o;
+			return tore == that.tore && verein.equals(that.verein);
+		}
+	}
+
+
+	/**
 	 * Welche drei Vereine haben die meisten Tore zuhause geschossen, und wie viele?
 	 */
-	static List<Pair<String,Integer>> vereineMeisteToreZuhause() throws IOException {
+	static List<VereinTore> vereineMeisteToreZuhause() throws IOException {
 
 		return null;
 	}
@@ -95,7 +119,7 @@ class Analysen {
 	/**
 	 * Welcher Verein hat die wenigsten Tore auswärts geschossen, und wie viele?
 	 */
-	static Pair<String, Integer> vereineWenigsteToreAuswaerts() throws IOException {
+	static VereinTore vereineWenigsteToreAuswaerts() throws IOException {
 
 		return null;
 	}
